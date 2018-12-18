@@ -4,7 +4,10 @@ import com.drugstore.po.UserPO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-//@Repository
+@Repository
 public interface UserRepository extends JpaRepository<UserPO,Integer> {
-    UserPO findById(int id);
+
+    boolean existsByEmailOrPhone(String email,String phone);
+
+    UserPO findUserPOByEmailOrPhone(String email,String phone);
 }

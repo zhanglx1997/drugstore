@@ -5,27 +5,49 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user", schema = "drugstore")
 public class UserPO {
-    private int id;
-    private String name;
+    private String id;
+    private String nickname;
+    private String email;
+    private String phone;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
+    @Column(name = "nickname")
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    @Basic
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Basic
+    @Column(name = "phone")
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -35,16 +57,20 @@ public class UserPO {
 
         UserPO userPO = (UserPO) o;
 
-        if (id != userPO.id) return false;
-        if (name != null ? !name.equals(userPO.name) : userPO.name != null) return false;
+        if (id != null ? !id.equals(userPO.id) : userPO.id != null) return false;
+        if (nickname != null ? !nickname.equals(userPO.nickname) : userPO.nickname != null) return false;
+        if (email != null ? !email.equals(userPO.email) : userPO.email != null) return false;
+        if (phone != null ? !phone.equals(userPO.phone) : userPO.phone != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
         return result;
     }
 }

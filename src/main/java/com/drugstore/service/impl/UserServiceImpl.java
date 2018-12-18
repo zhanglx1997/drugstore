@@ -12,14 +12,19 @@ public class UserServiceImpl {
     @Resource
     private UserRepository userRepository;
 
-    public List<UserPO> findAll(){
-        return userRepository.findAll();
+    public void save(UserPO user){
+        userRepository.save(user);
     }
 
-    public UserPO find(int id){
-        return userRepository.findById(id);
+    public boolean verifyAccount(String account){
+        return userRepository.existsByEmailOrPhone(account,account);
     }
-    public void delete(int id){
-        userRepository.deleteById(id);
+
+    public String verifyPassword(String account){
+        UserPO user = userRepository.findUserPOByEmailOrPhone(account, account);
+        return user.getPhone();
     }
+
+
+
 }
