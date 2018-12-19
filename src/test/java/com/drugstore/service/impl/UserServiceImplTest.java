@@ -1,7 +1,6 @@
 package com.drugstore.service.impl;
 
 import com.drugstore.DrugstoreApplication;
-import com.drugstore.po.UserPO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

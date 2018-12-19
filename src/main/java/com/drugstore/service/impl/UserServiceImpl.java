@@ -5,7 +5,6 @@ import com.drugstore.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service
 public class UserServiceImpl {
@@ -22,8 +21,9 @@ public class UserServiceImpl {
 
     public String verifyPassword(String account){
         UserPO user = userRepository.findUserPOByEmailOrPhone(account, account);
-        return user.getPhone();
+        return user.getPassword();
     }
+
 
 
 
