@@ -1,0 +1,8 @@
+CREATE TABLE `user` (
+  `id` varchar(36) NOT NULL,
+  `nickname` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `password` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

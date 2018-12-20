@@ -24,6 +24,10 @@ public class UserServiceImpl {
         return user.getPassword();
     }
 
+    public UserPO getUserByAccount(String account){
+        return userRepository.findUserPOByEmailOrPhone(account,account);
+    }
+
 
 
 

@@ -1,6 +1,7 @@
 package com.drugstore.service.impl;
 
 import com.drugstore.DrugstoreApplication;
+import com.drugstore.po.UserPO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,15 @@ public class UserServiceImplTest {
     private UserServiceImpl userService;
 
     @Test
-    @Transactional
-    public void operation(){
-        int id=2;
+    public void verifyPasswordTest(){
+        String account="123456";
+        String password = userService.verifyPassword(account);
+        System.out.println(password);
+    }
 
-        List<UserPO> all = userService.findAll();
-        userService.delete(id);
-        System.out.println("ahha");
+    @Test
+    public void verifyAccountTest(){
+        userService.verifyAccount("123456");
     }
 
 }
