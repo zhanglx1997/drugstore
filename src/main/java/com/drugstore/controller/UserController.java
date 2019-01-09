@@ -24,71 +24,75 @@ import java.util.UUID;
 
 @Controller
 public class UserController {
-    private Logger logger=LoggerFactory.getLogger(UserController.class);
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    public static final int MAP_CAPACITY=4;
+    public static final int MAP_CAPACITY = 4;
 
-    private static final String MESSAGE="msg";
+    private static final String MESSAGE = "msg";
 
     @Autowired
     private UserServiceImpl userService;
 
     @RequestMapping("/login")
-    public @ResponseBody  Map<String,String> login( String account, String password,HttpServletResponse response){
+    public @ResponseBody
+    Map<String, String> login(String account, String password, HttpServletResponse response) {
         logger.info("login");
-        Map<String,String> map=new HashMap<>(MAP_CAPACITY);
-        if(StringUtils.isBlank(account)){
-            map.put(MESSAGE,"账号不能为空！");
+        Map<String, String> map = new HashMap<>(MAP_CAPACITY);
+        if (StringUtils.isBlank(account)) {
+            map.put(MESSAGE, "账号不能为空！");
             return map;
         }
         UserPO user = userService.getUserByAccount(account);
-        if(null==user){
-            map.put(MESSAGE,"该账号不存在！");
+        if (null == user) {
+            map.put(MESSAGE, "该账号不存在！");
             return map;
         }
-        if(!password.equals(user.getPassword())){
-            map.put(MESSAGE,"密码错误！");
+        if (!password.equals(user.getPassword())) {
+            map.put(MESSAGE, "密码错误！");
             return map;
         }
         //设置cookie
-        CookieUtils.setCookie("id",user.getId(),response);
+        CookieUtils.setCookie("id", user.getId(), response);
 
         return map;
     }
 
     @RequestMapping("/register")
-    public @ResponseBody Map<String,String> register(@RequestBody  @Valid UserPO user, BindingResult result, HttpServletResponse response){
+    public @ResponseBody
+    Map<String, String> register(@RequestBody @Valid UserPO user, BindingResult result, HttpServletResponse response) {
         logger.info("register");
-        Map<String,String> map=new HashMap<>(MAP_CAPACITY);
-        if(result.hasErrors()){
-            for(ObjectError error:result.getAllErrors()){
-                map.put(MESSAGE,error.getDefaultMessage());
+        Map<String, String> map = new HashMap<>(MAP_CAPACITY);
+        if (result.hasErrors()) {
+            for (ObjectError error : result.getAllErrors()) {
+                map.put(MESSAGE, error.getDefaultMessage());
                 return map;
             }
         }
-        if(StringUtils.isBlank(user.getId())){
-            user.setId(UUID.randomUUID().toString().replaceAll("-",""));
+        if (StringUtils.isBlank(user.getId())) {
+            user.setId(UUID.randomUUID().toString().replaceAll("-", ""));
         }
         //todo
         //有个电话号码或邮箱重复的验证，最好还是另外实现验证码功能，可确保唯一性
 
         userService.save(user);
 
-        CookieUtils.setCookie("id",user.getId(),response);
-        map.put("msg","注册成功");
+        CookieUtils.setCookie("id", user.getId(), response);
+        map.put("msg", "注册成功");
         return map;
     }
 
     @RequestMapping("/logout")
-    public @ResponseBody Map<String,String> logout(HttpServletResponse response, HttpServletRequest request){
-        CookieUtils.removeCookie(response,request);
-        Map<String,String> map=new HashMap<>();
-        map.put(MESSAGE,"注销成功");
+    public @ResponseBody
+    Map<String, String> logout(HttpServletResponse response, HttpServletRequest request) {
+        CookieUtils.removeCookie(response, request);
+        Map<String, String> map = new HashMap<>();
+        map.put(MESSAGE, "注销成功");
         return map;
     }
 
     @RequestMapping("/hello")
-    public @ResponseBody String hello(){
+    public @ResponseBody
+    String hello() {
         return "Hello boy";
     }
 }
